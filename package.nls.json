@@ -1,0 +1,8 @@
+{
+	"hello.title": "Unicorn Client Dev: Hello World",
+	"hello.description": "Show Hello World Message",
+	"copyThemeMiniIcon.title": "Unicorn Client Dev: Copy Theme Mini Icon",
+	"copyThemeMiniIcon.description": "Copy the mini icon of the current theme to corresponding directory(Need to link remote Share-Unicorn server By Finder once!)",
+	"setUnicornUnityDirectory.title": "Unicorn Client Dev: Set Unicorn Unity Directory",
+	"setUnicornUnityDirectory.description": "Set the directory path for Unicorn Unity."
+}

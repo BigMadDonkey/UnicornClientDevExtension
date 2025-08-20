@@ -1,0 +1,92 @@
+{
+	"name": "unicornclientdev",
+	"publisher": "MadDonkey",
+	"displayName": "UnicornClientDev",
+	"description": "Unicorn client VSCode Extension. Provide a series of commands to save your time.",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.99.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"icon": "005-unicorn.png",
+	"activationEvents": [
+		"onLanguage:lua",
+		"onLanguage:C#"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"icons": {
+			"unicorn-icon": {
+				"description": "Unicorn icon",
+				"default": {
+					"fontPath": "./unicorn.woff2",
+					"fontCharacter": "\\E001"
+				}
+			}
+		},
+		"snippets": [
+			{
+				"language": "lua",
+				"path": "./snippets/unicorn_client_dev_lua.code-snippets"
+			}
+		],
+		"commands": [
+			{
+				"command": "unicornclientdev.helloWorld",
+				"title": "%hello.title%",
+				"description": "%hello.description%"
+			},
+			{
+				"command": "unicornclientdev.copyThemeMiniIcon",
+				"title": "%copyThemeMiniIcon.title%",
+				"description": "%copyThemeMiniIcon.description%"
+			},
+			{
+				"command": "unicornclientdev.setUnicornUnityDirectory",
+				"title": "%setUnicornUnityDirectory.title%",
+				"description": "%setUnicornUnityDirectory.description%"
+			}
+		],
+		"configuration": [
+			{
+				"title": "Unicorn Client Settings",
+				"properties": {
+					"unicornclientdev.unicornUnityDirectory": {
+						"type": "string",
+						"default": "",
+						"description": "The directory path for Unicorn Unity."
+					},
+					"unicornclientdev.remoteShareDirectory": {
+						"type": "string",
+						"default": "/Volumes/",
+						"description": "The remote share server directory path.(Better dont modify this.)"
+					}
+				}
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src",
+		"test": "vscode-test"
+	},
+	"devDependencies": {
+		"@types/mocha": "^10.0.10",
+		"@types/node": "20.x",
+		"@types/vscode": "^1.99.0",
+		"@typescript-eslint/eslint-plugin": "^8.31.1",
+		"@typescript-eslint/parser": "^8.31.1",
+		"@vscode/test-cli": "^0.0.11",
+		"@vscode/test-electron": "^2.5.2",
+		"eslint": "^9.25.1",
+		"typescript": "^5.8.3"
+	},
+	"dependencies": {
+		"@vscode/l10n": "^0.0.18"
+	}
+}
