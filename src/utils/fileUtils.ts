@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
+import * as commonUtils from "../utils/commonUtils";
 
 /**
  * Copies files with specific extensions from a source directory to a target directory.
@@ -16,88 +17,68 @@ export function copyFilesWithExtensions(
 	try {
 		// 检查源目录是否存在
 		if (!fs.existsSync(sourceDir)) {
-			vscode.window.showErrorMessage(
+			throw new Error(
 				"Source directory does not exist or is not accessible."
 			);
-			return;
 		}
 
 		// 检查目标目录是否存在
 		if (!fs.existsSync(targetDir)) {
-			vscode.window.showErrorMessage(
+			throw new Error(
 				"Target directory does not exist or is not accessible."
 			);
-			return;
 		}
+		// 递归复制文件和文件夹
+		function copyRecursive(src: string, dest: string): void {
+			const items = fs.readdirSync(src, { withFileTypes: true });
+			for (const item of items) {
+				const sourcePath = path.join(src, item.name);
+				const targetPath = path.join(dest, item.name);
 
-		// 读取源目录中的文件
-		const files = fs.readdirSync(sourceDir);
-		const filteredFiles = files.filter((file) =>
-			extensions.includes(path.extname(file).toLowerCase())
-		);
-
-		if (filteredFiles.length === 0) {
-			vscode.window.showInformationMessage(
-				"No matching files found in the source directory."
-			);
-			return;
-		}
-
-		// 复制文件到目标目录
-		for (const file of filteredFiles) {
-			const sourceFile = path.join(sourceDir, file);
-			const targetFile = path.join(targetDir, file);
-
-			if (!fs.existsSync(targetFile)) {
-				fs.copyFileSync(sourceFile, targetFile);
-				vscode.window.showInformationMessage(`Copied: ${file}`);
-			} else {
-				vscode.window.showWarningMessage(
-					`File already exists: ${file}`
-				);
+				if (item.isDirectory()) {
+					// 如果是文件夹，递归处理
+					if (!fs.existsSync(targetPath)) {
+						fs.mkdirSync(targetPath);
+					}
+					copyRecursive(sourcePath, targetPath);
+				} else if (
+					extensions.includes(path.extname(item.name).toLowerCase())
+				) {
+					// 如果是文件且扩展名匹配，复制文件
+					fs.copyFileSync(sourcePath, targetPath);
+				}
 			}
 		}
-
-		vscode.window.showInformationMessage("File copy operation completed.");
+		copyRecursive(sourceDir, targetDir);
 	} catch (error) {
-		vscode.window.showErrorMessage(`Error: ${(error as Error).message}`);
+		throw new Error(
+			`Error in copyFilesWithExtensions: ${(error as Error).message}`
+		);
 	}
 }
 
 /**
- * Copies a file from a source URL to a target directory.
+ * Copy a single file from a source URL to a target URL.
  * @param sourceUrl The source file URL.
- * @param targetUrl The target directory path.
+ * @param targetUrl The target file URL.
  * @returns A boolean indicating success or failure.
  */
 export function copyFileFromUrl(sourceUrl: string, targetUrl: string): boolean {
 	try {
 		const fileName = path.basename(sourceUrl);
-		// const targetFile = path.join(targetUrl, fileName);
 
 		// 检查源目录是否存在
 		if (!fs.existsSync(sourceUrl)) {
-			// vscode.window.showErrorMessage(
-			// 	"Target directory does not exist or is not accessible."
-			// );
-            console.log(`Source file does not exist: ${sourceUrl}`);
+			// throw new Error(`Source file does not exist: ${sourceUrl}`);
+			// * 修改此处逻辑，对于单个指定URL的文件复制，如果不存在，那就不存在好了。这里只return false即可。
 			return false;
 		}
-
-		// 检查目标文件是否已存在
-		// if (fs.existsSync(targetFile)) {
-		// 	vscode.window.showInformationMessage(
-		// 		`File already exists: ${fileName}. Replace it.`
-		// 	);
-		// return;
-		// }
-
 		// 复制文件
 		fs.copyFileSync(sourceUrl, targetUrl);
-		// vscode.window.showInformationMessage(`Copied: ${fileName}`);
 		return true;
 	} catch (error) {
-		vscode.window.showErrorMessage(`Error: ${(error as Error).message}`);
-		return false;
+		throw new Error(
+			`Error in copyFileFromUrl: ${(error as Error).message}`
+		);
 	}
 }

@@ -39,6 +39,11 @@
 				"description": "%hello.description%"
 			},
 			{
+				"command": "unicornclientdev.copyThemeIcon",
+				"title": "%copyThemeIcon.title%",
+				"description": "%copyThemeIcon.description%"
+			},
+			{
 				"command": "unicornclientdev.copyThemeMiniIcon",
 				"title": "%copyThemeMiniIcon.title%",
 				"description": "%copyThemeMiniIcon.description%"

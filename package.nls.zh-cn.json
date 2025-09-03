@@ -1,8 +1,10 @@
 {
-    "hello.title": "Unicorn Client Dev: 你好，世界",
-    "hello.description": "显示你好，世界消息",
-    "copyThemeMiniIcon.title": "Unicorn Client Dev: Unicorn 复制主题Mini Icon",
-    "copyThemeMiniIcon.description": "将当前主题的Mini Icon复制到相应目录(需要先从Finder中连接过Share-Unicorn，挂载过！)",
-    "setUnicornUnityDirectory.title": "Unicorn Client Dev: 设置 Unicorn Unity 目录",
-    "setUnicornUnityDirectory.description": "设置 Unicorn Unity 的目录路径。"
+	"hello.title": "Unicorn Client Dev: 你好，世界",
+	"hello.description": "显示你好，世界消息",
+	"copyThemeIcon.title": "Unicorn Client Dev: 复制主题Icon图片",
+	"copyThemeIcon.description": "将当前主题的Icon图片目录下的图片和目录复制到对应的Icon目录(需要先从Finder中连接过Share-Unicorn，挂载过！)",
+	"copyThemeMiniIcon.title": "Unicorn Client Dev: 复制主题Mini Icon",
+	"copyThemeMiniIcon.description": "将当前主题的Mini Icon复制到相应目录(需要先从Finder中连接过Share-Unicorn，挂载过！)",
+	"setUnicornUnityDirectory.title": "Unicorn Client Dev: 设置 Unicorn Unity 目录",
+	"setUnicornUnityDirectory.description": "设置 Unicorn Unity 的目录路径。"
 }
