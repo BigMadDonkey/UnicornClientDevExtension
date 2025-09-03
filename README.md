@@ -4,8 +4,6 @@ Unicorn 客户端开发的自用 VSCode Extension
 
 author: LYC
 
-[toc]
-
 ## Features
 
 - 引入开发常用的代码片段
@@ -14,7 +12,7 @@ author: LYC
 
 ## TODO
 
-[ ] 与LSP API交互，在恰当位置插入必要的代码
+- [ ] 与LSP API交互，在恰当位置插入必要的代码
 
 ## Extension Settings
 
@@ -22,7 +20,7 @@ author: LYC
 
 ## Release Notes
 
-2025-08-20更新第一版
+2025-08-20: 更新第一版
 
 ## 附1: Snippets一览
 
