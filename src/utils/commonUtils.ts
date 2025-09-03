@@ -1,6 +1,10 @@
 // A utility function to show an information message
 import * as vscode from "vscode";
 
+/** ### 弹出通知，提示性信息。 
+ * * 目前没打算把info输出也写到output中。
+ * @param message 
+ */
 export function showInfoMessage(message: string): void {
     vscode.window.showInformationMessage(message);
 }
@@ -15,4 +19,41 @@ export async function updateConfiguration(section: string, value: any): Promise<
 export function getConfiguration(section: string): any {
     const config = vscode.workspace.getConfiguration("unicornclientdev");
     return config.get(section);
+}
+
+// Define a global OutputChannel for the extension
+export const outputChannel = vscode.window.createOutputChannel("UnicornClientDev");
+
+// A utility function to get the current timestamp in UTC+8 timezone
+function getCurrentTimestamp(): string {
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Shanghai", // UTC+8 时区
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+    });
+
+    const parts = formatter.formatToParts(now);
+    const date = `${parts.find(p => p.type === "year")?.value}-${parts.find(p => p.type === "month")?.value}-${parts.find(p => p.type === "day")?.value}`;
+    const time = `${parts.find(p => p.type === "hour")?.value}:${parts.find(p => p.type === "minute")?.value}:${parts.find(p => p.type === "second")?.value}`;
+    return `${date} ${time}`;
+}
+
+// A utility function to show an error message and log it to the Output window
+export function showError(message: string): void {
+    vscode.window.showErrorMessage(message);
+    outputChannel.appendLine(`[${getCurrentTimestamp()}] [Error]: ${message}`);
+    outputChannel.show();
+}
+
+// A utility function to show a warning message and log it to the Output window
+export function showWarning(message: string): void {
+    vscode.window.showWarningMessage(message);
+    outputChannel.appendLine(`[${getCurrentTimestamp()}] [Warning]: ${message}`);
+    outputChannel.show();
 }

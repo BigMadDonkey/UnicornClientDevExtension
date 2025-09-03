@@ -16,7 +16,7 @@ export function registerCopyThemeMiniIconsFromRemoteCommand(
 					"remoteShareDirectory"
 				);
 				if (!remoteSharePath) {
-					vscode.window.showErrorMessage(
+					commonUtils.showError(
 						"RemoteShareDirectory is not configured."
 					);
 					return;
@@ -31,7 +31,7 @@ export function registerCopyThemeMiniIconsFromRemoteCommand(
 					"unicornUnityDirectory"
 				);
 				if (!unicornUnityPath) {
-					vscode.window.showErrorMessage(
+					commonUtils.showError(
 						"UnicornUnityDirectory is not configured."
 					);
 					return;
@@ -47,7 +47,7 @@ export function registerCopyThemeMiniIconsFromRemoteCommand(
 					placeHolder: "e.g. 10070",
 				});
 				if (!themeId) {
-					vscode.window.showErrorMessage("Theme ID is required.");
+					commonUtils.showError("Theme ID is required.");
 					return;
 				}
 				// themeId < 10200时，用theme
@@ -61,15 +61,6 @@ export function registerCopyThemeMiniIconsFromRemoteCommand(
 					themeFolder = "theme3";
 				}
 				targetIconPath = path.join(targetIconPath, themeFolder);
-
-				const test_dir = path.join(remoteSharePath, "Share-Unicorn");
-				if (!fs.existsSync(test_dir)) {
-					// vscode.window.showErrorMessage(
-					// 	"Target directory does not exist or is not accessible."
-					// );
-					console.log(`Source file does not exist: ${test_dir}`);
-					return false;
-				}
 
 				let path_suffix = [`lang_en`, `lang_jp`, `lang_zhtw`];
 				let result = [];
@@ -91,17 +82,17 @@ export function registerCopyThemeMiniIconsFromRemoteCommand(
 						`😊Copy operation completed: copied to ${themeFolder} .\n
 						${(result[0] && path_suffix[0]) || ""} ${(result[1] && path_suffix[1]) || ""} ${
 							(result[2] && path_suffix[2]) || ""
-						} files copied.\n
+						} file(s) copied.\n
 						Remember to open in Unity to generate .meta file first!`
 					);
 				} else {
-					vscode.window.showErrorMessage(
-						"No files copied. Maybe Share-Unicorn is not attached to your Finder? Or the file doesn't exist?"
+					commonUtils.showError(
+						"No file copied. Maybe Share-Unicorn is not attached to your Finder? Or the file doesn't exist?"
 					);
 				}
 			} catch (error) {
-				vscode.window.showErrorMessage(
-					`Error: ${(error as Error).message}`
+				commonUtils.showError(
+					`Error in copyThemeMiniIcon: ${(error as Error).message}`
 				);
 			}
 		}

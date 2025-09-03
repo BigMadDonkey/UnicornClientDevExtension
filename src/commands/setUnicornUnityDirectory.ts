@@ -17,7 +17,7 @@ export function registerSetUnicornUnityDirectoryCommand(context: vscode.Extensio
                 await commonUtils.updateConfiguration("unicornUnityDirectory", selectedPath);
                 commonUtils.showInfoMessage(`Unicorn Unity Directory set to: ${selectedPath}`);
             } else {
-                vscode.window.showWarningMessage("No directory selected.");
+                commonUtils.showWarning("No directory selected.");
             }
         }
     );
