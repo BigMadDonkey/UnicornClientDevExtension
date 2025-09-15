@@ -7,6 +7,9 @@
 	"engines": {
 		"vscode": "^1.99.0"
 	},
+	"extensionDependencies": [
+		"yinfei.luahelper"
+	],
 	"categories": [
 		"Other"
 	],
@@ -47,6 +50,11 @@
 				"command": "unicornclientdev.copyThemeMiniIcon",
 				"title": "%copyThemeMiniIcon.title%",
 				"description": "%copyThemeMiniIcon.description%"
+			},
+			{
+				"command": "unicornclientdev.insertNewThemeCode",
+				"title": "%insertNewThemeCode.title%",
+				"description": "%insertNewThemeCode.description%"
 			},
 			{
 				"command": "unicornclientdev.setUnicornUnityDirectory",

@@ -5,6 +5,7 @@ import * as vscode from "vscode";
 import { registerSetUnicornUnityDirectoryCommand } from "./commands/setUnicornUnityDirectory";
 import { registerCopyThemeIconsFromRemoteCommand } from "./commands/copyThemeIcon";
 import { registerCopyThemeMiniIconsFromRemoteCommand } from "./commands/copyThemeMiniIcon";
+import { registerInsertNewThemeCodeCommand } from "./commands/insertNewThemeCode";
 import * as commonUtils from "./utils/commonUtils";
 import { register } from "module";
 
@@ -87,6 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
 	registerSetUnicornUnityDirectoryCommand(context);
 	registerCopyThemeIconsFromRemoteCommand(context);
 	registerCopyThemeMiniIconsFromRemoteCommand(context);
+	registerInsertNewThemeCodeCommand(context);
 }
 
 let myStatusBarItem: vscode.StatusBarItem;

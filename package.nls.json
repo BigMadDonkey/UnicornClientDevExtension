@@ -5,6 +5,8 @@
 	"copyThemeIcon.description": "Copy Every Image and folder under share theme Icon path. (Need to link to remote Share-Unicorn server By Finder first!)",
 	"copyThemeMiniIcon.title": "Unicorn Client Dev: Copy Theme Mini Icon",
 	"copyThemeMiniIcon.description": "Copy the mini icon of the current theme to corresponding directory(Need to link to remote Share-Unicorn server By Finder first!)",
+	"insertNewThemeCode.title": "Unicorn Client Dev: Insert New Theme Code",
+	"insertNewThemeCode.description": "Insert code snippet for new theme. Must have run the new theme creation tool in Unity Editor first.",
 	"setUnicornUnityDirectory.title": "Unicorn Client Dev: Set Unicorn Unity Directory",
 	"setUnicornUnityDirectory.description": "Set the directory path for Unicorn Unity."
 }
