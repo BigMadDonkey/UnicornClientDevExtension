@@ -82,3 +82,44 @@ export function copyFileFromUrl(sourceUrl: string, targetUrl: string): boolean {
 		);
 	}
 }
+
+/**
+ * Writes a string to a specified position in a file, detecting and preserving the file's line-ending format.
+ * @param filePath The path to the file where the content will be written.
+ * @param content The string content to insert.
+ * @param position The position in the file where the content will be inserted (line number, 1-based).
+ */
+export function insertContentWithEOLDetection(
+    filePath: string,
+    content: string,
+    position: number
+): void {
+    try {
+        if (!fs.existsSync(filePath)) {
+            throw new Error(`File does not exist: ${filePath}`);
+        }
+
+        // Read the file content
+        const fileContent = fs.readFileSync(filePath, "utf-8");
+
+        // Detect the line-ending format
+        const eol = fileContent.includes("\r\n") ? "\r\n" : "\n";
+
+        // Normalize the content's line endings
+        const normalizedContent = content.replace(/\n/g, eol);
+
+        // Split the file content into lines
+        const lines = fileContent.split(/\r?\n/);
+
+        // Insert the content at the specified position
+        lines.splice(position - 1, 0, normalizedContent);
+
+        // Join the lines back and write to the file
+        const updatedContent = lines.join(eol);
+        fs.writeFileSync(filePath, updatedContent, "utf-8");
+    } catch (error) {
+        throw new Error(
+            `Error in insertContentWithEOLDetection: ${(error as Error).message}`
+        );
+    }
+}
