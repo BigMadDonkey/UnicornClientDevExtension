@@ -8,6 +8,8 @@ author: LYC
 
 - 引入开发常用的代码片段
 - 支持一步从Share上拷贝主题小Icon到对应目录
+- 支持一步从Share上拷贝主题Icon图片资源到对应目录
+- 插入新主题代码（待扩展！）
 - Status bar icon
 
 ## TODO
@@ -20,7 +22,9 @@ author: LYC
 
 ## Release Notes
 
-2025-08-20: 更新第一版
+2025-09-19: 更新v0.0.2
+
+2025-08-20: 更新v0.0.1
 
 ## 附1: Snippets一览
 

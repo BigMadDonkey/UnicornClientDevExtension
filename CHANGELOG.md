@@ -8,7 +8,11 @@ snippets 参考API并没有动态打开关闭的方法，因此不能配置激�
 
 整理了fileUtils的工具函数的抛出异常的标准，对于复制单个URL文件的函数，如果URL不存在，并不直接抛出异常，而是return false。即使真发生了异常，也不立刻输出错误信息，抛出到上一层去catch。
 
-添加了复制主题Icon图片到指定目录（ThemeLogoNew/ThemeXXXXXIcon）的逻辑，目前会将Share-Unicorn/Theme/Theme_icon/XXXXX/image下的所有目录和图片文件复制过去。
+整体了一些工具函数到commonUtils。
+
+新增命令：`copyThemeIcon`: 添加了复制主题Icon图片到指定目录（ThemeLogoNew/ThemeXXXXXIcon）的逻辑，目前会将Share-Unicorn/Theme/Theme_icon/XXXXX/image下的所有目录和图片文件复制过去。
+
+新增命令：`insertNewThemeCode`: 设计为给新创建的主题自动做一些代码层面的操作，目前只实现了给定主题ID，读取主题命名并插入Controller定义到Global_5.lua中，后面应该会扩展。
 
 ## v0.0.1
 
