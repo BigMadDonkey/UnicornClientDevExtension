@@ -8,5 +8,7 @@
 	"insertNewThemeCode.title": "Unicorn Client Dev: 插入新主题代码",
 	"insertNewThemeCode.description": "为新主题插入代码片段。需要先在Unity Editor执行过新主题创建工具。",
 	"setUnicornUnityDirectory.title": "Unicorn Client Dev: 设置 Unicorn Unity 目录",
-	"setUnicornUnityDirectory.description": "设置 Unicorn Unity 的目录路径。"
+	"setUnicornUnityDirectory.description": "设置 Unicorn Unity 的目录路径。",
+	"newThemeEditProcessorHandler.title": "Unicorn Client Dev: 新主题编辑Processor Handler",
+	"newThemeEditProcessorHandler.description": "修改新主题Processor的Handler方法签名，不以self为基准。"
 }

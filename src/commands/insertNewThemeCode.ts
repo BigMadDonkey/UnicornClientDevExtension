@@ -27,35 +27,25 @@ export function registerInsertNewThemeCodeCommand(
 					prompt: "Enter the theme ID",
 					placeHolder: "e.g. 10070",
 				});
-				const themeIdInt = parseInt(themeId || "0");
-				if (!themeId || themeIdInt <= 0) {
-					commonUtils.showError("Theme ID is illegal.");
+				// 验证 themeId
+				if (!themeId) {
+					commonUtils.showError("Theme ID is required.");
 					return;
 				}
-				const themeConfigPath = path.join(
-					unicornUnityPath,
-					`Assets/LuaScripts/GameTheme/${themeId}/Theme.lua`
-				);
-				if (!fs.existsSync(themeConfigPath)) {
-					commonUtils.showError(
-						`Theme configuration file does not exist at path: ${themeConfigPath}. Maybe you haven't run new SlotTheme command from Unity Editor yet?`
+
+				// 获取 Controller 名称
+				let controllerName: string;
+				try {
+					controllerName = commonUtils.getControllerNameByThemeId(
+						themeId,
+						unicornUnityPath
 					);
+				} catch (error) {
+					commonUtils.showError((error as Error).message);
 					return;
 				}
-				const themeConfigContent = fs.readFileSync(
-					themeConfigPath,
-					"utf-8"
-				);
-				const controllerMatch = themeConfigContent.match(
-					/MAIN_NAME\s*=\s*"([^"]+)"/
-				);
-				if (!controllerMatch || controllerMatch.length < 2) {
-					commonUtils.showError(
-						`Could not find Controller definition in Theme.lua at path: ${themeConfigPath}.`
-					);
-					return;
-				}
-				const controllerName = controllerMatch[1];
+
+				const themeIdInt = parseInt(themeId);
 				const codeSnippet = `    [${themeId}] = function()
         ${controllerName}Ctrl = require "GameTheme.${themeId}.${controllerName}.Controller"
     end,`;
@@ -104,7 +94,10 @@ export function registerInsertNewThemeCodeCommand(
 					}
 				}
 				console.log("Found insertLine:", insertLine);
-				console.log("normalThemeInsertLinePos:", normalThemeInsertLinePos);
+				console.log(
+					"normalThemeInsertLinePos:",
+					normalThemeInsertLinePos
+				);
 				console.log("igtThemeInsertLinePos:", igtThemeInsertLinePos);
 				if (insertLine === -1) {
 					insertLine = commonUtils.isValidIGTThemeId(themeId)
@@ -117,8 +110,8 @@ export function registerInsertNewThemeCodeCommand(
 				);
 				fileUtils.insertContentWithEOLDetection(
 					global5Path,
-					codeSnippet,
-					insertLine
+					insertLine,
+					codeSnippet
 				);
 				vscode.commands.executeCommand(
 					"vscode.openFolder",

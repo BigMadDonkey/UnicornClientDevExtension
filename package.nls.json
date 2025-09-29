@@ -8,5 +8,7 @@
 	"insertNewThemeCode.title": "Unicorn Client Dev: Insert New Theme Code",
 	"insertNewThemeCode.description": "Insert code snippet for new theme. Must have run the new theme creation tool in Unity Editor first.",
 	"setUnicornUnityDirectory.title": "Unicorn Client Dev: Set Unicorn Unity Directory",
-	"setUnicornUnityDirectory.description": "Set the directory path for Unicorn Unity."
+	"setUnicornUnityDirectory.description": "Set the directory path for Unicorn Unity.",
+	"newThemeEditProcessorHandler.title": "Unicorn Client Dev: New Theme Edit Processor Handler",
+	"newThemeEditProcessorHandler.description": "Modify new theme Processor Handler method signature, not based on self."
 }

@@ -60,6 +60,11 @@
 				"command": "unicornclientdev.setUnicornUnityDirectory",
 				"title": "%setUnicornUnityDirectory.title%",
 				"description": "%setUnicornUnityDirectory.description%"
+			},
+			{
+				"command": "unicornclientdev.newThemeEditProcessorHandler",
+				"title": "%newThemeEditProcessorHandler.title%",
+				"description": "%newThemeEditProcessorHandler.description%"
 			}
 		],
 		"configuration": [

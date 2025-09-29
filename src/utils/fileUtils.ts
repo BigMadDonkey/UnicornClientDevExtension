@@ -86,13 +86,13 @@ export function copyFileFromUrl(sourceUrl: string, targetUrl: string): boolean {
 /**
  * Writes a string to a specified position in a file, detecting and preserving the file's line-ending format.
  * @param filePath The path to the file where the content will be written.
+ * @param lineNumber The position in the file where the content will be inserted (line number, 1-based).
  * @param content The string content to insert.
- * @param position The position in the file where the content will be inserted (line number, 1-based).
  */
 export function insertContentWithEOLDetection(
     filePath: string,
+    lineNumber: number,
     content: string,
-    position: number
 ): void {
     try {
         if (!fs.existsSync(filePath)) {
@@ -112,7 +112,7 @@ export function insertContentWithEOLDetection(
         const lines = fileContent.split(/\r?\n/);
 
         // Insert the content at the specified position
-        lines.splice(position - 1, 0, normalizedContent);
+        lines.splice(lineNumber - 1, 0, normalizedContent);
 
         // Join the lines back and write to the file
         const updatedContent = lines.join(eol);
@@ -120,6 +120,49 @@ export function insertContentWithEOLDetection(
     } catch (error) {
         throw new Error(
             `Error in insertContentWithEOLDetection: ${(error as Error).message}`
+        );
+    }
+}
+
+/**
+ * Replace a specific line in a file with new content, detecting and preserving the file's line-ending format.
+ * @param filePath The path to the file where the line will be replaced.
+ * @param lineNumber The line number to replace (1-based).
+ * @param newContent The new content for the line.
+ */
+export function replaceLineWithEOLDetection(
+    filePath: string,
+    lineNumber: number,
+    newContent: string
+): void {
+    try {
+        if (!fs.existsSync(filePath)) {
+            throw new Error(`File does not exist: ${filePath}`);
+        }
+
+        // Read the file content
+        const fileContent = fs.readFileSync(filePath, "utf-8");
+
+        // Detect the line-ending format
+        const eol = fileContent.includes("\r\n") ? "\r\n" : "\n";
+
+        // Split the file content into lines
+        const lines = fileContent.split(/\r?\n/);
+
+        // Check if line number is valid
+        if (lineNumber < 1 || lineNumber > lines.length) {
+            throw new Error(`Invalid line number: ${lineNumber}. File has ${lines.length} lines.`);
+        }
+
+        // Replace the specified line
+        lines[lineNumber - 1] = newContent;
+
+        // Join the lines back and write to the file
+        const updatedContent = lines.join(eol);
+        fs.writeFileSync(filePath, updatedContent, "utf-8");
+    } catch (error) {
+        throw new Error(
+            `Error in replaceLineWithEOLDetection: ${(error as Error).message}`
         );
     }
 }

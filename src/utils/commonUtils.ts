@@ -96,3 +96,76 @@ export function isValidIGTThemeId(themeId: string): boolean {
 	const themeIdInt = parseInt(themeId || "0");
 	return !isNaN(themeIdInt) && themeIdInt >= 12000;
 }
+
+/**
+ * 根据给定的 themeID，获取其 Controller 名称字符串
+ * @param themeId 主题ID
+ * @param unicornUnityPath Unicorn Unity 项目路径
+ * @returns Controller 名称字符串，如果获取失败则抛出错误
+ */
+export function getControllerNameByThemeId(
+	themeId: string,
+	unicornUnityPath: string
+): string {
+	const fs = require("fs");
+	const path = require("path");
+
+	// 验证 themeId
+	if (!isValidThemeId(themeId)) {
+		throw new Error("Theme ID is illegal.");
+	}
+
+	// 构建 Theme.lua 文件路径
+	const themeConfigPath = path.join(
+		unicornUnityPath,
+		`Assets/LuaScripts/GameTheme/${themeId}/Theme.lua`
+	);
+
+	// 检查文件是否存在
+	if (!fs.existsSync(themeConfigPath)) {
+		throw new Error(
+			`Theme configuration file does not exist at path: ${themeConfigPath}. Maybe you haven't run new SlotTheme command from Unity Editor yet?`
+		);
+	}
+
+	// 读取文件内容
+	const themeConfigContent = fs.readFileSync(themeConfigPath, "utf-8");
+
+	// 使用正则表达式匹配 MAIN_NAME
+	const controllerMatch = themeConfigContent.match(
+		/MAIN_NAME\s*=\s*"([^"]+)"/
+	);
+
+	if (!controllerMatch || controllerMatch.length < 2) {
+		throw new Error(
+			`Could not find Controller definition (MAIN_NAME) in Theme.lua at path: ${themeConfigPath}.`
+		);
+	}
+
+	return controllerMatch[1];
+}
+
+/**
+ * 根据给定的 themeID，获取其主题名称字符串（去除Controller名称中的"Ctrl"后缀）
+ * @param themeId 主题ID
+ * @param unicornUnityPath Unicorn Unity 项目路径
+ * @returns 主题名称字符串，如果获取失败则抛出错误
+ */
+export function getThemeNameByThemeId(
+	themeId: string,
+	unicornUnityPath: string
+): string {
+	// 获取完整的 Controller 名称
+	const controllerName = getControllerNameByThemeId(
+		themeId,
+		unicornUnityPath
+	);
+
+	// 去除结尾的 "Ctrl" 字符串
+	if (controllerName.endsWith("Ctrl")) {
+		return controllerName.slice(0, -4); // 去除最后4个字符 "Ctrl"
+	}
+
+	// 如果不以 "Ctrl" 结尾，返回原名称
+	return controllerName;
+}
