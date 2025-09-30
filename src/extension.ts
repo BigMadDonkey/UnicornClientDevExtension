@@ -7,6 +7,7 @@ import { registerCopyThemeIconsFromRemoteCommand } from "./commands/copyThemeIco
 import { registerCopyThemeMiniIconsFromRemoteCommand } from "./commands/copyThemeMiniIcon";
 import { registerInsertNewThemeCodeCommand } from "./commands/insertNewThemeCode";
 import { registerNewThemeEditProcessorHandlerCommand } from "./commands/newThemeEditProcessorHandler";
+import { registerThemeLowResCheckConfigCommand } from "./commands/themeLowResCheckConfig";
 import * as commonUtils from "./utils/commonUtils";
 import { register } from "module";
 
@@ -91,6 +92,7 @@ export function activate(context: vscode.ExtensionContext) {
 	registerCopyThemeMiniIconsFromRemoteCommand(context);
 	registerInsertNewThemeCodeCommand(context);
 	registerNewThemeEditProcessorHandlerCommand(context);
+	registerThemeLowResCheckConfigCommand(context);
 }
 
 let myStatusBarItem: vscode.StatusBarItem;

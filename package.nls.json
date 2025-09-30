@@ -10,5 +10,7 @@
 	"setUnicornUnityDirectory.title": "Unicorn Client Dev: Set Unicorn Unity Directory",
 	"setUnicornUnityDirectory.description": "Set the directory path for Unicorn Unity.",
 	"newThemeEditProcessorHandler.title": "Unicorn Client Dev: New Theme Edit Processor Handler",
-	"newThemeEditProcessorHandler.description": "Modify new theme Processor Handler method signature, not based on self."
+	"newThemeEditProcessorHandler.description": "Modify new theme Processor Handler method signature, not based on self.",
+	"themeLowResCheckConfig.title": "Unicorn Client Dev: Theme Low Resolution Check Config",
+	"themeLowResCheckConfig.description": "Detect and configure theme low-resolution effects related code settings."
 }

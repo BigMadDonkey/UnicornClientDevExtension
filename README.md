@@ -10,6 +10,8 @@ author: LYC
 - 支持一步从Share上拷贝主题小Icon到对应目录
 - 支持一步从Share上拷贝主题Icon图片资源到对应目录
 - 插入新主题代码（待扩展！）
+- 新主题Processor Handler方法签名修改
+- 主题低特效配置检测与设置
 - Status bar icon
 
 ## TODO

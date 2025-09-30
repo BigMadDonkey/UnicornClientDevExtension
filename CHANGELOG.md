@@ -4,8 +4,10 @@
 
 新增命令：`newThemeEditProcessorHandler`: 自动将新创建的Processor里的Handler函数的方法签名修改为点引用，并在参数列表中加上开头的“board”，避免歧义。
 
+新增命令：`themeLowResCheckConfig`: 检测并设置主题低特效相关代码配置。
+
 fileUtils新增将某文件指定行替换为给定字符串的工具函数；commonUtils新增给定主题ID，获取ControllerName和ThemeName的工具函数。
-（剩余功能TODO...）s
+（剩余功能TODO...）
 
 ## v0.0.2
 

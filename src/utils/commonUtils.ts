@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 
 // Define a global OutputChannel for the extension
 export const outputChannel =
-	vscode.window.createOutputChannel("UnicornClientDev");
+	vscode.window.createOutputChannel("UnicornClientDev", "log");
 
 // A utility function to get the current timestamp in UTC+8 timezone
 function getCurrentTimestamp(): string {
