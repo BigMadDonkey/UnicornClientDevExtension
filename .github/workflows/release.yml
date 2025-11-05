@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 编译项目
+        run: npm run compile
+
+      - name: 安装 vsce
+        run: npm install -g @vscode/vsce
+
+      - name: 打包扩展
+        run: vsce package
+
+      - name: 获取版本信息
+        id: version
+        run: |
+          echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: 创建 GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.TAG_NAME }}
+          name: Release ${{ steps.version.outputs.VERSION }}
+          body: |
+            ## 🎉 UnicornClientDev ${{ steps.version.outputs.VERSION }}
+            
+            ### 📦 安装方式
+            
+            1. 下载下方的 `.vsix` 文件
+            2. 在 VSCode 中，按 `Ctrl+Shift+P` (Mac: `Cmd+Shift+P`)
+            3. 输入 "Install from VSIX"
+            4. 选择下载的 `.vsix` 文件
+          files: |
+            *.vsix
+          draft: false
+          prerelease: false
+

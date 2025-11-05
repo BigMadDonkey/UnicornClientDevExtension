@@ -4,6 +4,14 @@ Unicorn 客户端开发的自用 VSCode Extension
 
 author: LYC
 
+## install
+
+从release界面下载最新版本，解压后，在VSCode中执行“从VSIX中安装命令”，选择下载的VSIX文件即可。
+
+## Extension Settings
+
+使用命令面板的Set Unicorn Unity Directory命令，或者直接去扩展设置里修改`Unicornclientdev: Unicorn Unity Directory`为UnicornUnity的所在目录。
+
 ## Features
 
 - 引入开发常用的代码片段
@@ -25,9 +33,7 @@ author: LYC
 
 [ ] 插入主题内常用的bet相关数据的模板代码
 
-## Extension Settings
 
-使用命令面板的Set Unicorn Unity Directory命令，或者直接去扩展设置里修改`Unicornclientdev: Unicorn Unity Directory`为UnicornUnity的所在目录即可。
 
 ## Release Notes
 
