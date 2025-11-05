@@ -71,7 +71,7 @@
 		{
 			"command": "unicornclientdev.addGMStarAndNewThemePos",
 			"title": "%addGMStarAndNewThemePos.title%",
-			"description": "%addGMStarForNewTheme.description%"
+			"description": "%addGMStarAndNewThemePos.description%"
 		}
 		],
 		"configuration": [
