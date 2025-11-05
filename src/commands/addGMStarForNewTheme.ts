@@ -7,6 +7,7 @@ import * as fileUtils from "../utils/fileUtils";
 export function registerAddGMStarForNewThemeCommand(
 	context: vscode.ExtensionContext
 ) {
+	
 	const command = vscode.commands.registerCommand(
 		"unicornclientdev.addGMStarForNewTheme",
 		async () => {
