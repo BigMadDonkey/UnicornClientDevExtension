@@ -7,9 +7,6 @@
 	"engines": {
 		"vscode": "^1.99.0"
 	},
-	"extensionDependencies": [
-		"yinfei.luahelper"
-	],
 	"categories": [
 		"Other"
 	],
@@ -66,11 +63,16 @@
 				"title": "%newThemeEditProcessorHandler.title%",
 				"description": "%newThemeEditProcessorHandler.description%"
 			},
-			{
-				"command": "unicornclientdev.themeLowResCheckConfig",
-				"title": "%themeLowResCheckConfig.title%",
-				"description": "%themeLowResCheckConfig.description%"
-			}
+		{
+			"command": "unicornclientdev.themeLowResCheckConfig",
+			"title": "%themeLowResCheckConfig.title%",
+			"description": "%themeLowResCheckConfig.description%"
+		},
+		{
+			"command": "unicornclientdev.addGMStarAndNewThemePos",
+			"title": "%addGMStarAndNewThemePos.title%",
+			"description": "%addGMStarForNewTheme.description%"
+		}
 		],
 		"configuration": [
 			{

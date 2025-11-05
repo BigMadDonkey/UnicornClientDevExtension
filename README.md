@@ -10,19 +10,30 @@ author: LYC
 - 支持一步从Share上拷贝主题小Icon到对应目录
 - 支持一步从Share上拷贝主题Icon图片资源到对应目录
 - 插入新主题代码（待扩展！）
+- 插入GM/新主题星标位置代码（新）
+- 插入主题内常用的GM通用的辅助代码（todo)
+- 插入主题内常用的bet相关数据的模板代码（todo)
 - 新主题Processor Handler方法签名修改
 - 主题低特效配置检测与设置
 - Status bar icon
 
 ## TODO
 
-- [ ] 与LSP API交互，在恰当位置插入必要的代码
+[ ] 完善"insertNewThemeCode"命令。
+
+[ ] 插入主题内常用的GM通用的辅助代码
+
+[ ] 插入主题内常用的bet相关数据的模板代码
 
 ## Extension Settings
 
 使用命令面板的Set Unicorn Unity Directory命令，或者直接去扩展设置里修改`Unicornclientdev: Unicorn Unity Directory`为UnicornUnity的所在目录即可。
 
 ## Release Notes
+
+详细改动见ChangeLog
+
+2025-10-15: 更新v0.0.3
 
 2025-09-19: 更新v0.0.2
 

@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.0.4（开发中）
+
+新增命令：`addGMStarAndNewThemePos`: 为新创建的主题添加GM星标位置代码和新主题位置代码。
+
 ## v0.0.3
 
 新增命令：`newThemeEditProcessorHandler`: 自动将新创建的Processor里的Handler函数的方法签名修改为点引用，并在参数列表中加上开头的“board”，避免歧义。

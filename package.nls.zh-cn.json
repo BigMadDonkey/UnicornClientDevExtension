@@ -12,5 +12,7 @@
 	"newThemeEditProcessorHandler.title": "Unicorn Client Dev: 新主题编辑Processor处理器",
 	"newThemeEditProcessorHandler.description": "修改新主题Processor的Handler方法签名，不以self为基准。",
 	"themeLowResCheckConfig.title": "Unicorn Client Dev: 主题低特效配置检测",
-	"themeLowResCheckConfig.description": "检测并设置主题低特效相关代码配置。"
+	"themeLowResCheckConfig.description": "检测并设置主题低特效相关代码配置。",
+	"addGMStarAndNewThemePos.title": "Unicorn Client Dev: 添加GM星标/新主题位置代码",
+	"addGMStarAndNewThemePos.description": "在UIThemeWidget的Controller中为新主题添加GM星标代码片段和新主题位置代码片段。"
 }
