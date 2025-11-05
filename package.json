@@ -4,6 +4,10 @@
 	"displayName": "UnicornClientDev",
 	"description": "Unicorn client VSCode Extension. Provide a series of commands to save your time.",
 	"version": "0.0.3",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/BigMadDonkey/UnicornClientDevExtension.git"
+	},
 	"engines": {
 		"vscode": "^1.99.0"
 	},

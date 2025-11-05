@@ -33,8 +33,6 @@ author: LYC
 
 [ ] 插入主题内常用的bet相关数据的模板代码
 
-
-
 ## Release Notes
 
 详细改动见ChangeLog
