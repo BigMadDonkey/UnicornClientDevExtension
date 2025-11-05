@@ -9,7 +9,7 @@ export function registerAddGMStarForNewThemeCommand(
 ) {
 	
 	const command = vscode.commands.registerCommand(
-		"unicornclientdev.addGMStarForNewTheme",
+		"unicornclientdev.addGMStarAndNewThemePos",
 		async () => {
 			try {
 				// 从配置中读取本地目标目录
@@ -59,43 +59,25 @@ export function registerAddGMStarForNewThemeCommand(
 					"\n"
 				);
 
-				// 分割成行数组
-				const lines = normalizedContent.split("\n");
+			// 分割成行数组
+			const lines = normalizedContent.split("\n");
 
-				// 1. 找到 "local GameMasterPos = {" 的起始行
-				let startLineIndex = -1;
-				let endLineIndex = -1;
+			// 1. 查找 GameMasterPos 代码块的范围
+			const gameMasterPosRange = commonUtils.findCodeBlockRange(
+				lines,
+				"local GameMasterPos = {",
+				"}"
+			);
 
-				for (let i = 0; i < lines.length; i++) {
-					if (lines[i].includes("local GameMasterPos = {")) {
-						startLineIndex = i;
-						break;
-					}
-				}
+			if (!gameMasterPosRange) {
+				commonUtils.showError(
+					"Cannot find 'local GameMasterPos = {' block in Controller.lua"
+				);
+				return;
+			}
 
-				if (startLineIndex === -1) {
-					commonUtils.showError(
-						"Cannot find 'local GameMasterPos = {' in Controller.lua"
-					);
-					return;
-				}
-
-				// 2. 从起始行往下找到只包含 "}" 的结束行
-				for (let i = startLineIndex + 1; i < lines.length; i++) {
-					if (lines[i].trim() === "}") {
-						endLineIndex = i;
-						break;
-					}
-				}
-
-				if (endLineIndex === -1) {
-					commonUtils.showError(
-						"Cannot find closing '}' for GameMasterPos block"
-					);
-					return;
-				}
-				// console.log("startLineIndex:", startLineIndex);
-				// console.log("endLineIndex:", endLineIndex);
+			const startLineIndex = gameMasterPosRange.startLine;
+			const endLineIndex = gameMasterPosRange.endLine;
 
 				// 3. 在这个区域内遍历，匹配 [themeId] = {...},
 				const themeIdToInsert = parseInt(themeId);
@@ -156,53 +138,34 @@ export function registerAddGMStarForNewThemeCommand(
 					);
 				}
 				
-				// ===== 插入新主题星标逻辑 =====
-				// 重新读取文件内容（因为上面可能已经修改过）
-				const updatedControllerContent = fs.readFileSync(
-					controllerPath,
-					"utf-8"
+			// ===== 插入新主题星标逻辑 =====
+			// 重新读取文件内容（因为上面可能已经修改过）
+			const updatedControllerContent = fs.readFileSync(
+				controllerPath,
+				"utf-8"
+			);
+			const updatedNormalizedContent = updatedControllerContent.replace(
+				/\r\n/g,
+				"\n"
+			);
+			const updatedLines = updatedNormalizedContent.split("\n");
+
+			// 1. 查找 NewSlotRewardPos 代码块的范围
+			const newSlotRewardPosRange = commonUtils.findCodeBlockRange(
+				updatedLines,
+				"local NewSlotRewardPos = {",
+				"}"
+			);
+
+			if (!newSlotRewardPosRange) {
+				commonUtils.showError(
+					"Cannot find 'local NewSlotRewardPos = {' block in Controller.lua"
 				);
-				const updatedNormalizedContent = updatedControllerContent.replace(
-					/\r\n/g,
-					"\n"
-				);
-				const updatedLines = updatedNormalizedContent.split("\n");
+				return;
+			}
 
-				// 1. 找到 "local NewSlotRewardPos = {" 的起始行
-				let newSlotStartLineIndex = -1;
-				let newSlotEndLineIndex = -1;
-
-				for (let i = 0; i < updatedLines.length; i++) {
-					if (updatedLines[i].includes("local NewSlotRewardPos = {")) {
-						newSlotStartLineIndex = i;
-						break;
-					}
-				}
-
-				if (newSlotStartLineIndex === -1) {
-					commonUtils.showError(
-						"Cannot find 'local NewSlotRewardPos = {' in Controller.lua"
-					);
-					return;
-				}
-
-				// 2. 从起始行往下找到第一个 "}" 的结束行
-				for (let i = newSlotStartLineIndex + 1; i < updatedLines.length; i++) {
-					if (updatedLines[i].trim() === "}") {
-						newSlotEndLineIndex = i;
-						break;
-					}
-				}
-
-				if (newSlotEndLineIndex === -1) {
-					commonUtils.showError(
-						"Cannot find closing '}' for NewSlotRewardPos block"
-					);
-					return;
-				}
-
-				// console.log("newSlotStartLineIndex:", newSlotStartLineIndex);
-				// console.log("newSlotEndLineIndex:", newSlotEndLineIndex);
+			const newSlotStartLineIndex = newSlotRewardPosRange.startLine;
+			const newSlotEndLineIndex = newSlotRewardPosRange.endLine;
 
 				// 3. 检查这之间是否已经有该 themeId
 				let newSlotThemeExists = false;

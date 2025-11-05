@@ -46,10 +46,8 @@ export function registerInsertNewThemeCodeCommand(
 				}
 
 				const themeIdInt = parseInt(themeId);
-				const codeSnippet = `    [${themeId}] = function()
-        ${controllerName}Ctrl = require "GameTheme.${themeId}.${controllerName}.Controller"
-    end,`;
-				// todo: 在Global_5.lua中插入代码片段
+				// ======= 主要feature1: 在Global_5.lua中插入代码片段 =======
+
 				const global5Path = path.join(
 					unicornUnityPath,
 					`Assets/LuaScripts/Global/Global_5.lua`
@@ -60,68 +58,165 @@ export function registerInsertNewThemeCodeCommand(
 					);
 					return;
 				}
-				const global5Content = fs.readFileSync(global5Path, "utf-8");
-				const normalizedGlobal5Content = global5Content.replace(
-					/\r\n/g,
-					"\n"
+				function findInsertLineInGlobal5() {
+					const codeSnippet = `    [${themeId}] = function()
+        ${controllerName}Ctrl = require "GameTheme.${themeId}.${controllerName}.Controller"
+    end,`;
+					const global5Content = fs.readFileSync(
+						global5Path,
+						"utf-8"
+					);
+					const normalizedGlobal5Content = global5Content.replace(
+						/\r\n/g,
+						"\n"
+					);
+					const lines = normalizedGlobal5Content.split("\n");
+
+					// 检查主题 ID 是否已经存在
+					const themeIdPattern = new RegExp(
+						`\\[${themeId}\\]\\s*=\\s*function\\(\\)`
+					);
+					const themeExists = lines.some((line) =>
+						themeIdPattern.test(line)
+					);
+
+					if (themeExists) {
+						commonUtils.showInfoMessage(
+							`Theme ID ${themeId} already exists in Global_5.lua. No changes made.`
+						);
+						return;
+					}
+
+					console.log("codeSnippet:", codeSnippet);
+					let insertLine = -1;
+					let normalThemeInsertLinePos = lines.length - 1; // 正常主题插入位置,即-- IGT Theme上两行
+					let igtThemeInsertLinePos = lines.length - 1; // 倒数第二行的索引
+					for (let i = 0; i < lines.length; i++) {
+						if (lines[i].includes("-- IGT Theme")) {
+							normalThemeInsertLinePos = i;
+							break;
+						}
+					}
+					// 从themeIdInt开始+50的范围内，找到第一个存在的theme id的所在行，插入到它上面一行；否则插入到normalThemeInsertLinePos或者igtThemeInsertLinePos。
+					for (let i = themeIdInt; i < themeIdInt + 50; i++) {
+						const themeIdLineIndex = lines.findIndex((line) =>
+							line.includes(`[${i}] = function()`)
+						);
+						if (themeIdLineIndex !== -1) {
+							insertLine = themeIdLineIndex + 1;
+							break;
+						}
+					}
+					// console.log("Found insertLine:", insertLine);
+					// console.log(
+					// 	"normalThemeInsertLinePos:",
+					// 	normalThemeInsertLinePos
+					// );
+					// console.log("igtThemeInsertLinePos:", igtThemeInsertLinePos);
+					if (insertLine === -1) {
+						insertLine = commonUtils.isValidIGTThemeId(themeId!)
+							? igtThemeInsertLinePos
+							: normalThemeInsertLinePos;
+					}
+
+					// commonUtils.showInfoMessage(
+					// 	"Oh Yeah! Ready to insert at " + insertLine
+					// );
+					fileUtils.insertContentWithEOLDetection(
+						global5Path,
+						insertLine,
+						codeSnippet
+					);
+					vscode.commands.executeCommand(
+						"vscode.openFolder",
+						vscode.Uri.file(
+							path.join(
+								unicornUnityPath,
+								`Assets/LuaScripts/Global/Global_5.lua`
+							)
+						),
+						{ forceNewWindow: false }
+					);
+				}
+				findInsertLineInGlobal5();
+
+				// ======= 主要feature2: 在主题Controller.lua中插入代码片段 =======
+				const themeName = commonUtils.getThemeNameByThemeId(
+					themeId,
+					unicornUnityPath
 				);
-				console.log("codeSnippet:", codeSnippet);
-				if (normalizedGlobal5Content.includes(codeSnippet)) {
-					commonUtils.showInfoMessage(
-						`The code snippet for theme ID ${themeId} already exists in Global_5.lua. No changes made.`
+				const themeDir = path.join(
+					unicornUnityPath,
+					`Assets/LuaScripts/GameTheme/${themeId}/${themeName}`
+				);
+				const controllerPath = path.join(themeDir, `Controller.lua`);
+				if (!fs.existsSync(controllerPath)) {
+					commonUtils.showError(
+						`${themeId}/${themeName}/Controller.lua file does not exist at path: ${controllerPath}.`
 					);
 					return;
 				}
-				// 找到“-- IGT Theme”的所在行，以及文件的倒数第二行
-				const lines = normalizedGlobal5Content.split("\n");
-				let insertLine = -1;
-				let normalThemeInsertLinePos = lines.length - 1; // 正常主题插入位置,即-- IGT Theme上两行
-				let igtThemeInsertLinePos = lines.length - 1; // 倒数第二行的索引
-				for (let i = 0; i < lines.length; i++) {
-					if (lines[i].includes("-- IGT Theme")) {
-						normalThemeInsertLinePos = i;
-						break;
-					}
-				}
-				// 从themeIdInt开始+50的范围内，找到第一个存在的theme id的所在行，插入到它上面一行；否则插入到normalThemeInsertLinePos或者igtThemeInsertLinePos。
-				for (let i = themeIdInt; i < themeIdInt + 50; i++) {
-					const themeIdLineIndex = lines.findIndex((line) =>
-						line.includes(`[${i}] = function()`)
+				async function findInsertLineInController() {
+					let fileContent = fs.readFileSync(controllerPath, "utf-8");
+					let normalizedContent = fileContent.replace(/\r\n/g, "\n");
+					let lines = normalizedContent.split("\n");
+					let codeSnippet = `local Base = BaseThemeCtrl`;
+					const baseControllerDefinitionLineIndex = lines.findIndex(
+						(line) => line.includes(`local Base = BaseThemeCtrl`)
 					);
-					if (themeIdLineIndex !== -1) {
-						insertLine = themeIdLineIndex + 1;
-						break;
+					const controllerDefinitionLineIndex = lines.findIndex(
+						(line) =>
+							line.includes(
+								`local Controller = BaseClass("${themeName}Ctrl", BaseThemeCtrl)`
+							)
+					);
+					if (baseControllerDefinitionLineIndex !== -1) {
+						commonUtils.showInfoMessage(
+							`BaseThemeCtrl already defined in ${controllerPath}.`
+						);
+					} else if (
+						baseControllerDefinitionLineIndex === -1 &&
+						controllerDefinitionLineIndex !== -1
+					) {
+						fileUtils.insertContentWithEOLDetection(
+							controllerPath,
+							controllerDefinitionLineIndex + 1, // 插入到controllerDefinitionLineIndex上面那一行
+							codeSnippet
+						);
 					}
-				}
-				console.log("Found insertLine:", insertLine);
-				console.log(
-					"normalThemeInsertLinePos:",
-					normalThemeInsertLinePos
-				);
-				console.log("igtThemeInsertLinePos:", igtThemeInsertLinePos);
-				if (insertLine === -1) {
-					insertLine = commonUtils.isValidIGTThemeId(themeId)
-						? igtThemeInsertLinePos
-						: normalThemeInsertLinePos;
-				}
 
+					// 添加ProcessLevelUpData定义
+					// 先更新fileContent和lines
+					fileContent = fs.readFileSync(controllerPath, "utf-8");
+					normalizedContent = fileContent.replace(/\r\n/g, "\n");
+					lines = normalizedContent.split("\n");
+					codeSnippet = `--- ### @override
+function Controller:ProcessLevelUpData(data)
+    Base.ProcessLevelUpData(self, data)
+	-- todo 
+end`;
+					const processLevelUpDataDefinitionLineIndex = lines.findIndex(
+						(line) => line.includes(`function Controller:ProcessLevelUpData(data)`)
+					);
+					if (processLevelUpDataDefinitionLineIndex !== -1) {
+						commonUtils.showInfoMessage(
+							`ProcessLevelUpData already defined in ${controllerPath}.`
+						);
+					} else {
+						fileUtils.insertContentWithEOLDetection(
+							controllerPath,
+							lines.length - 1, // 插入到文件末尾.
+							codeSnippet
+						);
+					}
+					const document = await vscode.workspace.openTextDocument(
+						controllerPath
+					);
+					await vscode.window.showTextDocument(document);
+				}
+				await findInsertLineInController();
 				commonUtils.showInfoMessage(
-					"Oh Yeah! Ready to insert at " + insertLine
-				);
-				fileUtils.insertContentWithEOLDetection(
-					global5Path,
-					insertLine,
-					codeSnippet
-				);
-				vscode.commands.executeCommand(
-					"vscode.openFolder",
-					vscode.Uri.file(
-						path.join(
-							unicornUnityPath,
-							`Assets/LuaScripts/Global/Global_5.lua`
-						)
-					),
-					{ forceNewWindow: false }
+					`Successfully inserted code snippets for theme ${themeId}.`
 				);
 			} catch (error) {
 				commonUtils.showError(

@@ -8,7 +8,7 @@ import { registerCopyThemeMiniIconsFromRemoteCommand } from "./commands/copyThem
 import { registerInsertNewThemeCodeCommand } from "./commands/insertNewThemeCode";
 import { registerNewThemeEditProcessorHandlerCommand } from "./commands/newThemeEditProcessorHandler";
 import { registerThemeLowResCheckConfigCommand } from "./commands/themeLowResCheckConfig";
-import { registerAddGMStarForNewThemeCommand } from "./commands/addGMStarForNewTheme";
+import { registerAddGMStarForNewThemeCommand } from "./commands/addGMStarAndNewThemePos";
 import * as commonUtils from "./utils/commonUtils";
 import { register } from "module";
 

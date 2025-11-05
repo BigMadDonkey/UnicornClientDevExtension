@@ -2,8 +2,10 @@
 import * as vscode from "vscode";
 
 // Define a global OutputChannel for the extension
-export const outputChannel =
-	vscode.window.createOutputChannel("UnicornClientDev", "log");
+export const outputChannel = vscode.window.createOutputChannel(
+	"UnicornClientDev",
+	"log"
+);
 
 // A utility function to get the current timestamp in UTC+8 timezone
 function getCurrentTimestamp(): string {
@@ -168,4 +170,81 @@ export function getThemeNameByThemeId(
 
 	// 如果不以 "Ctrl" 结尾，返回原名称
 	return controllerName;
+}
+
+/**
+ * 代码块查找相关工具函数
+ */
+
+interface CodeBlockRange {
+	startLine: number;
+	endLine: number;
+}
+
+/**
+ * 从给定的 lines 数组中，查找匹配指定起始模式的行到匹配指定结束模式的行的行号范围
+ * @param lines 文件内容的行数组
+ * @param startPattern 起始行的匹配模式（字符串或正则表达式）
+ * @param endPattern 结束行的匹配模式（字符串或正则表达式），默认为 "}"
+ * @param startSearchIndex 开始搜索的行索引，默认为 0
+ * @returns 返回 { startLine: number, endLine: number } 对象，行号为 0-based 索引；如果未找到则返回 null
+ *
+ * @example
+ * ```typescript
+ * const lines = fileContent.split('\n');
+ * const range = findCodeBlockRange(lines, "local GameMasterPos = {", "}");
+ * if (range) {
+ *   console.log(`Found block from line ${range.startLine} to ${range.endLine}`);
+ * }
+ * ```
+ */
+export function findCodeBlockRange(
+	lines: string[],
+	startPattern: string | RegExp,
+	endPattern: string | RegExp = "}",
+	startSearchIndex: number = 0
+): CodeBlockRange | null {
+	let startLineIndex = -1;
+	let endLineIndex = -1;
+
+	// 1. 查找起始行
+	for (let i = startSearchIndex; i < lines.length; i++) {
+		const matched =
+			typeof startPattern === "string"
+				? lines[i].includes(startPattern)
+				: startPattern.test(lines[i]);
+
+		if (matched) {
+			startLineIndex = i;
+			break;
+		}
+	}
+
+	// 如果没找到起始行，返回 null
+	if (startLineIndex === -1) {
+		return null;
+	}
+
+	// 2. 从起始行往下查找结束行
+	for (let i = startLineIndex + 1; i < lines.length; i++) {
+		const matched =
+			typeof endPattern === "string"
+				? lines[i].trim() === endPattern
+				: endPattern.test(lines[i].trim());
+
+		if (matched) {
+			endLineIndex = i;
+			break;
+		}
+	}
+
+	// 如果没找到结束行，返回 null
+	if (endLineIndex === -1) {
+		return null;
+	}
+
+	return {
+		startLine: startLineIndex,
+		endLine: endLineIndex,
+	};
 }
