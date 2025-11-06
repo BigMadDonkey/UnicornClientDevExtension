@@ -4,7 +4,7 @@
 
 新增命令：`addGMStarAndNewThemePos`: 为新创建的主题添加GM星标位置代码和新主题位置代码。
 
-新增命令：`formatOpenSearchData`: 格式化OpenSearch数据,转化为GM上可直接使用的格式。使用本命令需注意：**必须在编辑器中focus到一个打开的文本，并且这个文本的命名为temp才可使用，会处理文本中所有内容。**这样做是为了防止误操作其他的文件。想使用本命令时，先新建一个名为temp的文本文件，将OpenSearch数据粘贴进去，然后focus到这个文本，再使用本命令。
+新增命令：`formatOpenSearchData`: 格式化OpenSearch数据,转化为GM上可直接使用的格式。使用本命令需注意：**必须在编辑器中focus到一个打开的文本，并且这个文本的命名为temp才可使用，会处理文本中所有内容。** 这样做是为了防止误操作其他的文件。想使用本命令时，先新建一个名为temp的文本文件，将OpenSearch数据粘贴进去，然后focus到这个文本，再使用本命令。
 
 更新命令：`insertNewThemeCode`: 新增了插入主题Controller代码的逻辑，插入基类定义以及升级接口。
 
