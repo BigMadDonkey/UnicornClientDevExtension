@@ -76,6 +76,11 @@
 			"command": "unicornclientdev.addGMStarAndNewThemePos",
 			"title": "%addGMStarAndNewThemePos.title%",
 			"description": "%addGMStarAndNewThemePos.description%"
+		},
+		{
+			"command": "unicornclientdev.formatOpenSearchData",
+			"title": "%formatOpenSearchData.title%",
+			"description": "%formatOpenSearchData.description%"
 		}
 		],
 		"configuration": [

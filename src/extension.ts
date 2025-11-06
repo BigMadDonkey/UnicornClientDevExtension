@@ -9,6 +9,7 @@ import { registerInsertNewThemeCodeCommand } from "./commands/insertNewThemeCode
 import { registerNewThemeEditProcessorHandlerCommand } from "./commands/newThemeEditProcessorHandler";
 import { registerThemeLowResCheckConfigCommand } from "./commands/themeLowResCheckConfig";
 import { registerAddGMStarForNewThemeCommand } from "./commands/addGMStarAndNewThemePos";
+import { registerFormatOpenSearchDataCommand } from "./commands/formatOpenSearchData";
 import * as commonUtils from "./utils/commonUtils";
 import { register } from "module";
 
@@ -95,6 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
 	registerNewThemeEditProcessorHandlerCommand(context);
 	registerThemeLowResCheckConfigCommand(context);
 	registerAddGMStarForNewThemeCommand(context);
+	registerFormatOpenSearchDataCommand(context);
 }
 
 let myStatusBarItem: vscode.StatusBarItem;

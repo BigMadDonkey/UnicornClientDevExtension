@@ -14,5 +14,7 @@
 	"themeLowResCheckConfig.title": "Unicorn Client Dev: Theme Low Resolution Check Config",
 	"themeLowResCheckConfig.description": "Detect and configure theme low-resolution effects related code settings.",
 	"addGMStarAndNewThemePos.title": "Unicorn Client Dev: Add GM Star and New Theme Position Code",
-	"addGMStarAndNewThemePos.description": "Add GM star mark code snippet and new theme position code snippet for new theme in UIThemeWidget Controller."
+	"addGMStarAndNewThemePos.description": "Add GM star mark code snippet and new theme position code snippet for new theme in UIThemeWidget Controller.",
+	"formatOpenSearchData.title": "Unicorn Client Dev: Format OpenSearch Data",
+	"formatOpenSearchData.description": "Format OpenSearch data: replace single quotes with double quotes, remove extra spaces, convert boolean values to numbers."
 }

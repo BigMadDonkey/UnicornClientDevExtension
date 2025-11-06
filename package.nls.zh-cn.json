@@ -14,5 +14,7 @@
 	"themeLowResCheckConfig.title": "Unicorn Client Dev: 主题低特效配置检测",
 	"themeLowResCheckConfig.description": "检测并设置主题低特效相关代码配置。",
 	"addGMStarAndNewThemePos.title": "Unicorn Client Dev: 添加GM星标/新主题位置代码",
-	"addGMStarAndNewThemePos.description": "在UIThemeWidget的Controller中为新主题添加GM星标代码片段和新主题位置代码片段。"
+	"addGMStarAndNewThemePos.description": "在UIThemeWidget的Controller中为新主题添加GM星标代码片段和新主题位置代码片段。",
+	"formatOpenSearchData.title": "Unicorn Client Dev: 格式化OpenSearch数据",
+	"formatOpenSearchData.description": "格式化OpenSearch数据：将单引号替换为双引号，去除多余空格，将布尔值转换为数字。"
 }
