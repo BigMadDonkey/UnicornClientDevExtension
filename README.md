@@ -6,7 +6,7 @@ author: LYC
 
 ## install
 
-从release界面下载最新版本，解压后，在VSCode中执行“从VSIX中安装命令”，选择下载的VSIX文件即可。
+从release界面下载最新版本，解压后，在VSCode中执行“从VSIX中安装”命令，选择下载的VSIX文件即可。
 
 ## Extension Settings
 
@@ -17,13 +17,16 @@ author: LYC
 - 引入开发常用的代码片段
 - 支持一步从Share上拷贝主题小Icon到对应目录
 - 支持一步从Share上拷贝主题Icon图片资源到对应目录
-- 插入新主题代码（待扩展！）
+- 插入新主题代码，包含插入Controller的Global_5, 主题Controller声明基类定义以及升级接口（待扩展！）
 - 插入GM/新主题星标位置代码（新）
 - 插入主题内常用的GM通用的辅助代码（todo)
 - 插入主题内常用的bet相关数据的模板代码（todo)
 - 新主题Processor Handler方法签名修改
 - 主题低特效配置检测与设置
+- 格式化OpenSearch数据,转化为GM上可直接使用的格式
 - Status bar icon
+
+每个指令的详细介绍可以在changeLog中查询。
 
 ## TODO
 

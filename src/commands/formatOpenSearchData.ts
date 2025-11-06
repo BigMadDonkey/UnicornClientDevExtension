@@ -51,8 +51,10 @@ export function registerFormatOpenSearchDataCommand(
 
 				// 2. 将 ": " 替换为 ":"，去除冒号后的多余空格
 				formattedText = formattedText.replace(/:\s+/g, ":");
+				// 3. 将 ", " 替换为 ","，去除逗号后的多余空格
+				formattedText = formattedText.replace(/,\s+/g, ",");
 
-				// 3. 将布尔值替换为数字
+				// 4. 将布尔值替换为数字
 				// 匹配 true/True/TRUE -> 1
 				formattedText = formattedText.replace(
 					/\b(true|True|TRUE)\b/g,
