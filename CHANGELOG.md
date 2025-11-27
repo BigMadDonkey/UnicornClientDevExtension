@@ -1,6 +1,6 @@
 # Change Log
 
-## v0.0.4（开发中）
+## v0.0.4
 
 新增命令：`addGMStarAndNewThemePos`: 为新创建的主题添加GM星标位置代码和新主题位置代码。
 

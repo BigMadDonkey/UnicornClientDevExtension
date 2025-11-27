@@ -404,6 +404,14 @@
 		],
 		"description": "play coin animator"
 	},
+	"ForceRebuildLayoutImmediate": {
+		"scope": "lua",
+		"prefix": "refersh_layout",
+		"body": [
+			"CS.UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(${1| ,text.transform|})"
+		],
+		"description": "force rebuild layout immediate"
+	},
 	"BreakPoint": {
 		"scope": "lua",
 		"prefix": "bp",

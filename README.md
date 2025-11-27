@@ -17,28 +17,33 @@ author: LYC
 - 引入开发常用的代码片段
 - 支持一步从Share上拷贝主题小Icon到对应目录
 - 支持一步从Share上拷贝主题Icon图片资源到对应目录
-- 插入新主题代码，包含插入Controller的Global_5, 主题Controller声明基类定义以及升级接口（待扩展！）
+- 插入新主题代码，包含插入Controller的Global_5, 主题Controller声明基类定义以及升级接口（有更新）
 - 插入GM/新主题星标位置代码（新）
-- 插入主题内常用的GM通用的辅助代码（todo)
-- 插入主题内常用的bet相关数据的模板代码（todo)
 - 新主题Processor Handler方法签名修改
 - 主题低特效配置检测与设置
-- 格式化OpenSearch数据,转化为GM上可直接使用的格式
+- 格式化OpenSearch数据,转化为GM网站上可直接使用的格式（新）
 - Status bar icon
 
 每个指令的详细介绍可以在changeLog中查询。
 
 ## TODO
 
-[ ] 完善"insertNewThemeCode"命令。
+[x] 完善"insertNewThemeCode"命令。
+
+[x] 插入主题内常用的GM通用的辅助代码
+
+[ ] 插入主题内常用的bet相关数据的模板代码
 
 [ ] 插入主题内常用的GM通用的辅助代码
 
 [ ] 插入主题内常用的bet相关数据的模板代码
 
+
 ## Release Notes
 
 详细改动见ChangeLog
+
+2025-11-27: 更新v0.0.4
 
 2025-10-15: 更新v0.0.3
 
@@ -457,6 +462,14 @@ author: LYC
   ],
   "description": "play coin animator"
  },
+ "ForceRebuildLayoutImmediate": {
+  "scope": "lua",
+  "prefix": "refresh_layout",
+  "body": [
+    "CS.UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(${1:text.transform})"
+  ],
+  "description": "force rebuild layout immediate"
+},
  "BreakPoint": {
   "scope": "lua",
   "prefix": "bp",
