@@ -8,6 +8,8 @@
 
 更新命令：`insertNewThemeCode`: 新增了插入主题Controller代码的逻辑，插入基类定义以及升级接口。
 
+新增snippets：`ForceRebuildLayoutImmediate`: 强制重新构建布局。
+
 ## v0.0.3
 
 新增命令：`newThemeEditProcessorHandler`: 自动将新创建的Processor里的Handler函数的方法签名修改为点引用，并在参数列表中加上开头的“board”，避免歧义。
